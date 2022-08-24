@@ -1,13 +1,15 @@
-# assets-checker
-A Github Action to Analyse your static image files and warns if the size increase the threshold size. It check for .jpg, .svg, .png, .gif, .jpeg files. 
+# Assets Checker
+A Github Action to Analyse your static image files on generating Pull Request and warns if the size increase the threshold size. It check for .jpg, .svg, .png, .gif, .jpeg files. 
 
 
 ## Output Stats
 
 ### Success - 
+<img width="926" alt="Screenshot 2022-08-24 at 4 49 47 PM" src="https://user-images.githubusercontent.com/90181918/186406594-e63aadd4-90cd-47ef-a81c-55f3aa106b41.png">
 
 ### Failure - 
 
+<img width="943" alt="Screenshot 2022-08-24 at 4 49 39 PM" src="https://user-images.githubusercontent.com/90181918/186406640-7766bf53-253d-4039-aa68-e244d40fd716.png">
 
 ## Usage:
 
