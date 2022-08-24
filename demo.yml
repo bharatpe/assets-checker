@@ -2,7 +2,7 @@ name: 'Assets Checker by BharatPe'
 
 on: [pull_request]
 jobs:
-  Calculate-Bundle-Difference:
+  Assets-Checker:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
