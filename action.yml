@@ -1,0 +1,18 @@
+name: 'Assets Checker'
+description: 'A Github Action to Analyse your static image files and warns if the size increase the threshold size. It check for .jpg, .svg, .png, .gif, .jpeg files.'
+author: 'BharatPe'
+inputs:
+  target_folder:
+    description: 'output path for the build package'
+    required: true
+    default: src/assets
+  thrashold_size:
+    description: 'Branch on which your feature branch will get merge ex. main'
+    required: true
+    default: 10
+  token:
+    description: 'The token to use to access the GitHub API'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
