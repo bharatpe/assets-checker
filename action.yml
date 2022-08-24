@@ -3,13 +3,13 @@ description: 'A Github Action to Analyse your static image files and warns if th
 author: 'BharatPe'
 inputs:
   target_folder:
-    description: 'output path for the build package'
+    description: 'The path of directory which contains all your assets ex. src/assets'
     required: true
     default: src/assets
   thrashold_size:
-    description: 'Branch on which your feature branch will get merge ex. main'
+    description: 'Maximum size of assets allowed in Bytes ex. 100'
     required: true
-    default: 10
+    default: 100
   token:
     description: 'The token to use to access the GitHub API'
     required: true

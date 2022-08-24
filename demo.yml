@@ -1,0 +1,16 @@
+name: 'Assets Checker by BharatPe'
+
+on: [pull_request]
+jobs:
+  Calculate-Bundle-Difference:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.16.0'
+      - uses: bharatpe/assets-checker@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target_folder: src/assets
+          thrashold_size: 10000

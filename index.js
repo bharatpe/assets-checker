@@ -48,7 +48,7 @@ const main = async () => {
     const arrayOutput = myOutput.split("\n");
     const count = arrayOutput.length -1;
 
-    const successBody = ` Woohooo :rocket: !!! Congratulations, your all assets are less than 100Kb.`
+    const successBody = ` Woohooo :rocket: !!! Congratulations, your all assets are less than ${inputs.thrashold_size}Kb.`
     const errorBody = `Oops :eyes: !!! You have ${count} assets with size more than ${inputs.thrashold_size}Kb. Please optimize them.`
 
 
