@@ -7,7 +7,7 @@ inputs:
     required: true
     default: src/assets
   thrashold_size:
-    description: 'Maximum size of assets allowed in Bytes ex. 100'
+    description: 'Maximum size of assets allowed in Kb ex. 100'
     required: true
     default: 100
   token:
