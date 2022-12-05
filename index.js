@@ -73,9 +73,9 @@ const main = async () => {
     const coverage = `|Files Type|New Stats|Old Stats|Differences (New - Old)|
 |-----|:-----:|:-----:|:-----:|
 |test1|test2|test3|test4|
-|test1|test2|test3|test4|
-|test1|test2|test3|test4|
-|test1|test2|test3|test4|
+|test1|test2|test3|test41|
+|test1|test2|test3|test42|
+|test1|test2|test3|test42|
 `;
 
     octokit.rest.issues.createComment({
