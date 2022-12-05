@@ -13336,7 +13336,7 @@ const main = async () => {
       });
     }
 
-    const out = await exec.exec(`find ${inputs.target_folder} \( -iname '*.gif' -o -iname '*.jpg' -o -iname '*.svg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options);
+    const out = await exec.exec(`find ${inputs.target_folder} \( -iname '*.gif' -o -iname '*.jpg' -o -iname '*.svg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f -size +10k -exec ls -lh {} \;`);
     console.log(out);
     
 
