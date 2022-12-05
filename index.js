@@ -43,7 +43,6 @@ const main = async () => {
       }
     };
 
-    // await exec.exec(`find ${inputs.target_folder} -type f  ! -regex  '.*\(png\|gif\|jpg\|svg\|jpeg\)$' -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options); 
     await exec.exec(`find ${inputs.target_folder} \( -iname '*.gif' -o -iname '*.jpg' -o -iname '*.svg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options);
 
     const arrayOutput = myOutput.split("\n");
@@ -69,6 +68,22 @@ const main = async () => {
         body: successBody,
       });
     }
+    
+
+    const coverage = `|Files Type|New Stats|Old Stats|Differences (New - Old)|
+|-----|:-----:|:-----:|:-----:|
+|test1|test2|test3|test4|
+|test1|test2|test3|test4|
+|test1|test2|test3|test4|
+|test1|test2|test3|test4|
+`;
+
+    octokit.rest.issues.createComment({
+      owner,
+      repo,
+      issue_number: issueNumber,
+      body: coverage,
+    });
 
   } catch (error) {
     core.setFailed(error.message);
