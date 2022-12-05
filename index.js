@@ -68,6 +68,9 @@ const main = async () => {
         body: successBody,
       });
     }
+
+    const out = await exec.exec(`find ${inputs.target_folder} \( -iname '*.gif' -o -iname '*.jpg' -o -iname '*.svg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options);
+    console.log(out);
     
 
     const coverage = `|Files Type|New Stats|Old Stats|Differences (New - Old)|
