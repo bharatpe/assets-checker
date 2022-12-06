@@ -13358,7 +13358,7 @@ const main = async () => {
       owner,
       repo,
       issue_number: issueNumber,
-      body: fileData,
+      body: coverage,
     });
 
   } catch (error) {
