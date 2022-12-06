@@ -13346,6 +13346,16 @@ const main = async () => {
       });
     }
 
+
+    const fileData = `|File Name | File Size||-----|:-----:||test1|test2||test1|test2|`;
+
+    octokit.rest.issues.createComment({
+      owner,
+      repo,
+      issue_number: issueNumber,
+      body: fileData,
+    });
+
   } catch (error) {
     core.setFailed(error.message);
   }
