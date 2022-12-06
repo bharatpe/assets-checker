@@ -2,7 +2,6 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const exec = require("@actions/exec");
 const { Octokit } = require("@octokit/rest");
-import { table } from 'table';
 
 
 const main = async () => {
@@ -80,10 +79,6 @@ const main = async () => {
         body: successBody,
       });
     }
-
-    console.log('table', table(filteredFiles));
-
-
  
 //     const coverage = `|File Name|File Size|
 // |-----|:-----:|
@@ -91,12 +86,12 @@ const main = async () => {
 // |test1|test2|
 // `;
 
-    octokit.rest.issues.createComment({
-      owner,
-      repo,
-      issue_number: issueNumber,
-      body: table(filteredFiles),
-    });
+    // octokit.rest.issues.createComment({
+    //   owner,
+    //   repo,
+    //   issue_number: issueNumber,
+    //   body: coverage,
+    // });
 
   } catch (error) {
     core.setFailed(error.message);
