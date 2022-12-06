@@ -13318,6 +13318,7 @@ const main = async () => {
 
     const invalidFiles = [...arrayOutput];
     const filteredFiles = [];
+    const filteredFilesTable = `|File Name|File Size|\n|-----|:-----:|`
 
     for(let item of invalidFiles) {
       const fileName = item.split(" ")[9];
@@ -13353,12 +13354,12 @@ const main = async () => {
 // |test1|test2|
 // `;
 
-    // octokit.rest.issues.createComment({
-    //   owner,
-    //   repo,
-    //   issue_number: issueNumber,
-    //   body: coverage,
-    // });
+    octokit.rest.issues.createComment({
+      owner,
+      repo,
+      issue_number: issueNumber,
+      body: filteredFilesTable,
+    });
 
   } catch (error) {
     core.setFailed(error.message);
