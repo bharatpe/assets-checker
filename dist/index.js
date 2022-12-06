@@ -13314,7 +13314,9 @@ const main = async () => {
 
     const arrayOutput = myOutput.split("\n");
     const count = arrayOutput.length -1;
-    console.log('-----', arrayOutput, '----', ...arrayOutput);
+
+    const outputFiles = [...arrayOutput];
+    console.warn('-----', outputFiles);
 
 
     const successBody = ` Woohooo :rocket: !!! Congratulations, your all assets are less than ${inputs.thrashold_size}Kb.`
