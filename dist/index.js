@@ -13346,10 +13346,12 @@ const main = async () => {
     }
 
     const getTableDataString = (filteredFiles) => {
-      const res = `|File Name|File Size|\n|-----|:-----:|\n|${filteredFiles[0][0]}|${filteredFiles[0][1]}`;
+      const res = `|File Name|File Size|\n|-----|:-----:|`;
       for(let item of filteredFiles) {
-        console.log(item[0], item[1]);
+        res.concat('\n', `|${item[0]}|${item[1]}`)
+        console.log(res.concat('\n', `|${item[0]}|${item[1]}`));
       }
+      console.log('-----res', res);
       return res;
     };
  
