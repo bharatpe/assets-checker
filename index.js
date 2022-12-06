@@ -3,6 +3,7 @@ const github = require("@actions/github");
 const exec = require("@actions/exec");
 const { Octokit } = require("@octokit/rest");
 
+
 const main = async () => {
   try {
 
@@ -43,15 +44,22 @@ const main = async () => {
       }
     };
 
-    // await exec.exec(`find ${inputs.target_folder} -type f  ! -regex  '.*\(png\|gif\|jpg\|svg\|jpeg\)$' -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options); 
-    await exec.exec(`find ${inputs.target_folder} \( -iname '*.gif' -o -iname '*.jpg' -o -iname '*.svg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options);
+    await exec.exec(`find ${inputs.target_folder} -type f \( -name "*.jpeg" -o -name "*.png" -o -name "*.svg" -o -name "*.gif" -o -name "*.jpg" \) -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options);
 
     const arrayOutput = myOutput.split("\n");
     const count = arrayOutput.length -1;
 
+    const invalidFiles = [...arrayOutput];
+    const filteredFiles = [];
+
+    for(let item of invalidFiles) {
+      const fileName = item.split(" ")[9];
+      const fileSize = item.split(" ")[4];
+      if(fileName && fileSize) filteredFiles.push([fileName, fileSize]);
+    }
+
     const successBody = ` Woohooo :rocket: !!! Congratulations, your all assets are less than ${inputs.thrashold_size}Kb.`
     const errorBody = `Oops :eyes: !!! You have ${count} assets with size more than ${inputs.thrashold_size}Kb. Please optimize them.`
-
 
     if(count > 0) {
       octokit.rest.issues.createComment({
@@ -69,6 +77,21 @@ const main = async () => {
         body: successBody,
       });
     }
+
+    const getTableDataString = (filteredFiles) => {
+      let res = `|File Name|File Size|\n|-----|:-----:|\n`;
+      for(let item of filteredFiles) {
+        res += `|${item[0]}|${item[1]}|\n`
+      }
+      return res;
+    };
+
+    octokit.rest.issues.createComment({
+      owner,
+      repo,
+      issue_number: issueNumber,
+      body: getTableDataString(filteredFiles),
+    });
 
   } catch (error) {
     core.setFailed(error.message);
