@@ -13318,19 +13318,12 @@ const main = async () => {
 
     const invalidFiles = [...arrayOutput];
     const filteredFiles = [];
-    const filteredFilesTable = `|File Name|File Size|\n|-----|:-----:|\n|test1|test2|`;
 
     for(let item of invalidFiles) {
       const fileName = item.split(" ")[9];
       const fileSize = item.split(" ")[4];
-      if(fileName && fileSize) {
-        filteredFiles.push([fileName, fileSize]);
-        const tableConfig = `|test1|test2|`
-        filteredFilesTable.concat('\n', tableConfig);
-      }
+      if(fileName && fileSize) filteredFiles.push([fileName, fileSize]);
     }
-
-    console.log('filteredFiles', filteredFiles);
 
     const successBody = ` Woohooo :rocket: !!! Congratulations, your all assets are less than ${inputs.thrashold_size}Kb.`
     const errorBody = `Oops :eyes: !!! You have ${count} assets with size more than ${inputs.thrashold_size}Kb. Please optimize them.`
@@ -13351,6 +13344,11 @@ const main = async () => {
         body: successBody,
       });
     }
+
+    const getTableDataString = (filteredFiles) => {
+      const res = `|File Name|File Size|\n|-----|:-----:|`;
+      return res;
+    };
  
 //     const coverage = `|File Name|File Size|
 // |-----|:-----:|
@@ -13362,7 +13360,7 @@ const main = async () => {
       owner,
       repo,
       issue_number: issueNumber,
-      body: filteredFilesTable,
+      body: getTableDataString(filteredFiles),
     });
 
   } catch (error) {
