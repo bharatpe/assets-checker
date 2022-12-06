@@ -13311,8 +13311,10 @@ const main = async () => {
     };
 
     await exec.exec(`find ${inputs.target_folder} \( -iname '*.gif' -o -iname '*.jpg' -o -iname '*.svg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options);
+    await exec.exec(`find ${inputs.target_folder} \( -iname '*.gif' -o -iname '*.jpg' -o -iname '*.svg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f -size +10k -exec ls -lh {} \;`, null, options);
 
     const arrayOutput = myOutput.split("\n");
+    console.log('------', arrayOutput, '---------');
     const count = arrayOutput.length -1;
 
     const successBody = ` Woohooo :rocket: !!! Congratulations, your all assets are less than ${inputs.thrashold_size}Kb.`
@@ -13335,25 +13337,22 @@ const main = async () => {
         body: successBody,
       });
     }
-
-    const out = await exec.exec(`find ${inputs.target_folder} \( -iname '*.gif' -o -iname '*.jpg' -o -iname '*.svg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f -size +10k -exec ls -lh {} \;`);
-    console.log(out);
     
 
-    const coverage = `|Files Type|New Stats|Old Stats|Differences (New - Old)|
-|-----|:-----:|:-----:|:-----:|
-|test1|test2|test3|test4|
-|test1|test2|test3|test41|
-|test1|test2|test3|test42|
-|test1|test2|test3|test42|
-`;
+//     const coverage = `|Files Type|New Stats|Old Stats|Differences (New - Old)|
+// |-----|:-----:|:-----:|:-----:|
+// |test1|test2|test3|test4|
+// |test1|test2|test3|test41|
+// |test1|test2|test3|test42|
+// |test1|test2|test3|test42|
+// `;
 
-    octokit.rest.issues.createComment({
-      owner,
-      repo,
-      issue_number: issueNumber,
-      body: coverage,
-    });
+//     octokit.rest.issues.createComment({
+//       owner,
+//       repo,
+//       issue_number: issueNumber,
+//       body: coverage,
+//     });
 
   } catch (error) {
     core.setFailed(error.message);
