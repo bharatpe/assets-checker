@@ -48,11 +48,16 @@ const main = async () => {
     const arrayOutput = myOutput.split("\n");
     const count = arrayOutput.length -1;
 
-    const outputFiles = [...arrayOutput];
+    const invalidFiles = [...arrayOutput];
+    const filteredFiles = [];
 
-    for(item of outputFiles) {
-      console.error('item', item.split(" ")[4], item.split(" ")[9]);
+    for(item of invalidFiles) {
+      const fileName = item.split(" ")[9];
+      const fileSize = item.split(" ")[4];
+      filteredFiles.push({fileName, fileName});
     }
+
+    console.log('filteredFiles', filteredFiles);
 
     const successBody = ` Woohooo :rocket: !!! Congratulations, your all assets are less than ${inputs.thrashold_size}Kb.`
     const errorBody = `Oops :eyes: !!! You have ${count} assets with size more than ${inputs.thrashold_size}Kb. Please optimize them.`
