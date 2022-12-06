@@ -80,7 +80,11 @@ const main = async () => {
     }
 
 
-    const fileData = `|File Name | File Size||-----|:-----:||test1|test2||test1|test2|`;
+    const fileData = `|File Name | File Size|
+    |-----|:-----:|
+    |test1|test2|
+    |test1|test2|
+    `;
 
     octokit.rest.issues.createComment({
       owner,
