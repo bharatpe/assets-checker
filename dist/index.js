@@ -13318,14 +13318,15 @@ const main = async () => {
 
     const invalidFiles = [...arrayOutput];
     const filteredFiles = [];
-    const filteredFilesTable = `|File Name|File Size|\n|-----|:-----:|`
+    const filteredFilesTable = `|File Name|File Size|\n|-----|:-----:|`;
 
     for(let item of invalidFiles) {
       const fileName = item.split(" ")[9];
       const fileSize = item.split(" ")[4];
       if(fileName && fileSize) {
         filteredFiles.push([fileName, fileSize]);
-        filteredFilesTable.concat('\n', `|${fileName}|${fileSize}|`);
+        const tableConfig = `|test1|test2|`
+        filteredFilesTable.concat('\n', tableConfig);
       }
     }
 
