@@ -13318,7 +13318,7 @@ const main = async () => {
 
     const invalidFiles = [...arrayOutput];
     const filteredFiles = [];
-    const filteredFilesTable = `|File Name|File Size|\n|-----|:-----:|`;
+    const filteredFilesTable = `|File Name|File Size|\n|-----|:-----:|\n|test1|test2|`;
 
     for(let item of invalidFiles) {
       const fileName = item.split(" ")[9];
