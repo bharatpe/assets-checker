@@ -13346,10 +13346,9 @@ const main = async () => {
     }
 
     const getTableDataString = (filteredFiles) => {
-      const res = `|File Name|File Size|\n|-----|:-----:|`;
+      let res = `|File Name|File Size|\n|-----|:-----:|\n`;
       for(let item of filteredFiles) {
-        res.concat('\n', `|${item[0]}|${item[1]}`)
-        console.log(res.concat('\n', `|${item[0]}|${item[1]}`));
+        res += `|${item[0]}|${item[1]}|\n`
       }
       console.log('-----res', res);
       return res;
