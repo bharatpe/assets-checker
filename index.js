@@ -48,7 +48,9 @@ const main = async () => {
     await exec.exec('git fetch');
     // await exec.exec(`find ${inputs.target_folder} -name *.jpeg -type f -size +1000k -exec ls -lh {} \;`)
 
-    await exec.exec(`find . -type f \( -name "*.jpeg" -o -name "*.png" -o -name "*.svg" \) -exec ls -lh {} \;`)
+    // await exec.exec(`find ${inputs.target_folder} -type f \( -name "*.jpeg" -o -name "*.png" -o -name "*.svg" \) -exec ls -lh {} \;`)
+    await exec.exec(`find ${inputs.target_folder} -type f \( -name "*.jpeg" -o -name "*.png" -o -name "*.svg" \) -size +1000k -exec ls -lh {} \;`)
+
 
     const arrayOutput = myOutput.split("\n");
     const count = arrayOutput.length -1;
