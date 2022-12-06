@@ -13323,7 +13323,10 @@ const main = async () => {
     for(let item of invalidFiles) {
       const fileName = item.split(" ")[9];
       const fileSize = item.split(" ")[4];
-      if(fileName && fileSize) filteredFiles.push([fileName, fileSize]);
+      if(fileName && fileSize) {
+        filteredFiles.push([fileName, fileSize]);
+        filteredFilesTable.concat('\n', `|${fileName}|${fileSize}|`);
+      }
     }
 
     console.log('filteredFiles', filteredFiles);
