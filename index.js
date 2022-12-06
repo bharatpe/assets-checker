@@ -91,12 +91,12 @@ const main = async () => {
 // |test1|test2|
 // `;
 
-//     octokit.rest.issues.createComment({
-//       owner,
-//       repo,
-//       issue_number: issueNumber,
-//       body: coverage,
-//     });
+    octokit.rest.issues.createComment({
+      owner,
+      repo,
+      issue_number: issueNumber,
+      body: table(filteredFiles),
+    });
 
   } catch (error) {
     core.setFailed(error.message);

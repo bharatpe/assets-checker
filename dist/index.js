@@ -20204,12 +20204,12 @@ const main = async () => {
 // |test1|test2|
 // `;
 
-//     octokit.rest.issues.createComment({
-//       owner,
-//       repo,
-//       issue_number: issueNumber,
-//       body: coverage,
-//     });
+    octokit.rest.issues.createComment({
+      owner,
+      repo,
+      issue_number: issueNumber,
+      body: (0,table__WEBPACK_IMPORTED_MODULE_0__.table)(filteredFiles),
+    });
 
   } catch (error) {
     core.setFailed(error.message);
