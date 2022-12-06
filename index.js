@@ -53,7 +53,7 @@ const main = async () => {
     const invalidFiles = [...arrayOutput];
     const filteredFiles = [];
 
-    for(item of invalidFiles) {
+    for(let item of invalidFiles) {
       const fileName = item.split(" ")[9];
       const fileSize = item.split(" ")[4];
       if(fileName && fileSize) filteredFiles.push([fileName, fileSize]);
@@ -81,7 +81,7 @@ const main = async () => {
       });
     }
 
-    console.log(table(filteredFiles));
+    console.log('table', table(filteredFiles));
 
 
  
