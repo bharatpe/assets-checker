@@ -13313,6 +13313,7 @@ const main = async () => {
     // await exec.exec(`find ${inputs.target_folder} -type f  ! -regex  '.*\(png\|gif\|jpg\|svg\|jpeg\)$' -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options); 
     await exec.exec(`find ${inputs.target_folder} \( -iname '*.gif' -o -iname '*.jpg' -o -iname '*.svg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options);
     await exec.exec('git fetch');
+    await exec.exec(`find . -name "*.png" -exec ls -l {} \;`)
     await exec.exec(`find src/assets/ \( -iname '*.gif' -o -iname '*.jpg' -o -iname '*.svg' -o -iname '*.jpeg' -o -iname '*.png' \) -type f -size +100k -exec ls -lh {} \;`);
     const arrayOutput = myOutput.split("\n");
     const count = arrayOutput.length -1;
