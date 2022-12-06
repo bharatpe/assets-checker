@@ -13353,12 +13353,6 @@ const main = async () => {
       console.log('-----res', res);
       return res;
     };
- 
-//     const coverage = `|File Name|File Size|
-// |-----|:-----:|
-// |test1|test2|
-// |test1|test2|
-// `;
 
     octokit.rest.issues.createComment({
       owner,
