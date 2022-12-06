@@ -13318,7 +13318,7 @@ const main = async () => {
     const outputFiles = [...arrayOutput];
 
     for(item of outputFiles) {
-      console.error('item', item);
+      console.error('item', typeof item, item.split(" "));
     }
 
     const successBody = ` Woohooo :rocket: !!! Congratulations, your all assets are less than ${inputs.thrashold_size}Kb.`
