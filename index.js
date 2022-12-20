@@ -65,6 +65,7 @@ const main = async () => {
       for(let item of filteredFiles) {
         res += `|${item[0]}|${item[1]}|\n`
       }
+      console.log('----->', res);
       return res;
     };
 
@@ -75,6 +76,7 @@ const main = async () => {
         issue_number: issueNumber,
         body: errorBody,
       });
+
       octokit.rest.issues.createComment({
         owner,
         repo,
