@@ -51,6 +51,8 @@ const main = async () => {
 
     const invalidFiles = [...arrayOutput];
 
+    console.log('invalidFiles', invalidFiles);
+
     const successBody = ` Woohooo :rocket: !!! Congratulations, your all assets are less than ${inputs.thrashold_size}Kb.`
     const errorBody = `Oops :eyes: !!! You have ${count} assets with size more than ${inputs.thrashold_size}Kb. Please optimize them.`
 
