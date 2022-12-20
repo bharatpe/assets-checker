@@ -55,13 +55,12 @@ const main = async () => {
     const errorBody = `Oops :eyes: !!! You have ${count} assets with size more than ${inputs.thrashold_size}Kb. Please optimize them.`
 
     const getTableDataString = (invalidFiles) => {
-      console.log('invalidFiles inside', invalidFiles);
-
-      const filteredFiles = [];
+      let filteredFiles = [];
 
       for(let item of invalidFiles) {
         const fileName = item.split(" ")[9];
         const fileSize = item.split(" ")[4];
+        console.log('testing 1', [fileName, fileSize]);
         if(fileName && fileSize) filteredFiles.push([fileName, fileSize]);
       }
       console.log('test->', filteredFiles);
