@@ -60,16 +60,13 @@ const main = async () => {
       for(let item of invalidFiles) {
         const fileName = item.split(" ")[8];
         const fileSize = item.split(" ")[4];
-        console.log('testing 1', [fileName, fileSize]);
         if(fileName && fileSize) filteredFiles.push([fileName, fileSize]);
       }
-      console.log('test->', filteredFiles);
 
       let res = `|File Name|File Size|\n|-----|:-----:|\n`;
       for(let item of filteredFiles) {
         res += `|${item[0]}|${item[1]}|\n`
       }
-      console.log('----->', res);
       return res;
     };
 
