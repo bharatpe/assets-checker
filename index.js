@@ -58,7 +58,7 @@ const main = async () => {
       let filteredFiles = [];
 
       for(let item of invalidFiles) {
-        const fileName = item.split(" ")[8];
+        const fileName = item.split(" ").slice(-1).pop();
         const fileSize = item.split(" ")[4];
         if(fileName && fileSize) filteredFiles.push([fileName, fileSize]);
       }
