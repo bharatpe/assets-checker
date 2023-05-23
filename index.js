@@ -54,12 +54,16 @@ const main = async () => {
      */
     function getAssetsIgnoreFiles(sourceArray) {
       const file=`${inputs.target_folder}/.assets-ignore`;
-      const ignoreArray = fs.readFileSync(file).toString().split("\n");
+      try {
+        const ignoreArray = fs.readFileSync(file).toString().split("\n");
 
-      if (ignoreArray.length > 0) {
-        return sourceArray.filter (val => {
-          return !ignoreArray.find(ival => val.endsWith(ival))
-        });
+        if (ignoreArray.length > 0) {
+          return sourceArray.filter (val => {
+            return !ignoreArray.find(ival => val.endsWith(ival))
+          });
+        }
+      } catch (e) {
+        // File not found exception.
       }
 
       return sourceArray;
