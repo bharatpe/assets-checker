@@ -44,9 +44,34 @@ const main = async () => {
       }
     };
 
+    async function getAssetsIgnoreFiles() {
+      const ignoreOptions = {};
+      const ignoreArray = [];
+      ignoreOptions.listeners = {
+        stdout: (data) => {
+          ignoreArray.push(data.toString());
+        },
+        stderr: (data) => {
+          
+        }
+      };
+
+      const file=`${inputs.target_folder}.assets-ignore`;
+      await exec.exec(`
+        while read -r line; do
+          echo "$line"
+        done <${file}`
+      , null, ignoreOptions);
+    }
+    
+    await getAssetsIgnoreFiles();
+
     await exec.exec(`find ${inputs.target_folder} -type f \( -name "*.jpeg" -o -name "*.png" -o -name "*.svg" -o -name "*.gif" -o -name "*.jpg" \) -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options);
 
-    const arrayOutput = myOutput.split("\n");
+    let arrayOutput = myOutput.split("\n");
+    if (ignoreArray.length > 0) {
+      arrayOutput = ignoreArray.filter (val => !arrayOutput.includes(val));
+    }
     const count = arrayOutput.length -1;
 
     const invalidFiles = [...arrayOutput];
