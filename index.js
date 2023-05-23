@@ -58,7 +58,7 @@ const main = async () => {
       // };
 
       const file=`${inputs.target_folder}/.assets-ignore`;
-      var ignoreArray = fs.readFileSync(file).toString().split("\n");
+      ignoreArray = fs.readFileSync(file).toString().split("\n");
     }
     
     await getAssetsIgnoreFiles();
