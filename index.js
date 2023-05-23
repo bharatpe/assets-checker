@@ -26,7 +26,7 @@ const main = async () => {
     const { number: issueNumber } = pullRequest;
     const { full_name: repoFullName } = repository;
     const [owner, repo] = repoFullName.split("/");
-    const ignoreArray = [];
+    let ignoreArray = [];
 
     const octokit = new Octokit({
       auth: inputs.token,
