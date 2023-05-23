@@ -60,7 +60,7 @@ const main = async () => {
       await exec.exec(`
         while read -r line; do
           echo "$line"
-        done <${file}`
+        done <"${file}"`
       , null, ignoreOptions);
     }
     
