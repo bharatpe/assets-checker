@@ -11,6 +11,13 @@ A Github Action to Analyse your static image files on generating Pull Request an
 
 <img width="943" alt="Screenshot 2022-08-24 at 4 49 39 PM" src="https://user-images.githubusercontent.com/90181918/186406640-7766bf53-253d-4039-aa68-e244d40fd716.png">
 
+### .assets-ignore file
+Might be we have some images which size greater then the threshold we provided, in this case we can ignore these files by using .assets-ignore file.
+.assets-ignore file must be inside the folder which you provide mentioned in target_folder key of master-action.yaml file :
+<img width="943" alt="Screenshot 2022-08-24 at 4 49 39 PM" src="https://user-images.githubusercontent.com/61680562/240259030-0343a79d-70d6-4e42-b39c-f87fec37fa5b.png">
+The ignore assets name must be add in separate lines:
+<img width="943" alt="Screenshot 2022-08-24 at 4 49 39 PM" src="https://user-images.githubusercontent.com/61680562/240259655-15213a4f-cbc7-4771-a226-8814d216c8f2.png">
+
 ## Usage:
 
 Checkout [action.yml](./action.yml)
