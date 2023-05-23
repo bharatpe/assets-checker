@@ -13293,7 +13293,6 @@ const main = async () => {
     const { number: issueNumber } = pullRequest;
     const { full_name: repoFullName } = repository;
     const [owner, repo] = repoFullName.split("/");
-    let ignoreArray = [];
 
     const octokit = new Octokit({
       auth: inputs.token,
@@ -13313,33 +13312,30 @@ const main = async () => {
       }
     };
 
-    async function getAssetsIgnoreFiles() {
-      // const ignoreOptions = {};
-      // ignoreOptions.listeners = {
-      //   stdout: (data) => {
-      //     ignoreArray.push(data.toString());
-      //   },
-      //   stderr: (data) => {
-          
-      //   }
-      // };
-
+    /**
+     * Check if array assets file name contains inside .ignore-assets file or not.
+     * If its contains then remove those images from sourceArray and return new array.
+     * 
+     * @param {Array} sourceArray Array of all assets files.
+     * @returns Array of files.
+     */
+    function getAssetsIgnoreFiles(sourceArray) {
       const file=`${inputs.target_folder}/.assets-ignore`;
-      ignoreArray = fs.readFileSync(file).toString().split("\n");
+      const ignoreArray = fs.readFileSync(file).toString().split("\n");
+
+      if (ignoreArray.length > 0) {
+        return sourceArray.filter (val => {
+          return !ignoreArray.find(ival => val.endsWith(ival))
+        });
+      }
+
+      return sourceArray;
     }
-    
-    await getAssetsIgnoreFiles();
 
     await exec.exec(`find ${inputs.target_folder} -type f \( -name "*.jpeg" -o -name "*.png" -o -name "*.svg" -o -name "*.gif" -o -name "*.jpg" \) -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options);
 
-    let arrayOutput = myOutput.split("\n");
-    exec.exec(`echo ${ignoreArray}`)
-    exec.exec(`echo ${arrayOutput}`)
-    if (ignoreArray.length > 0) {
-      arrayOutput = arrayOutput.filter (val => {
-        return !ignoreArray.find(ival => val.endsWith(ival))
-      });
-    }
+    const arrayOutput = getAssetsIgnoreFiles(myOutput.split("\n"));
+
     const count = arrayOutput.length -1;
 
     const invalidFiles = [...arrayOutput];
