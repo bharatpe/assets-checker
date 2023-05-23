@@ -13326,7 +13326,6 @@ const main = async () => {
 
       const file=`${inputs.target_folder}/.assets-ignore`;
       var ignoreArray = fs.readFileSync(file).toString().split("\n");
-      exec.exec(`echo ${ignoreArray}`)
     }
     
     await getAssetsIgnoreFiles();
@@ -13334,6 +13333,8 @@ const main = async () => {
     await exec.exec(`find ${inputs.target_folder} -type f \( -name "*.jpeg" -o -name "*.png" -o -name "*.svg" -o -name "*.gif" -o -name "*.jpg" \) -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options);
 
     let arrayOutput = myOutput.split("\n");
+    exec.exec(`echo ${ignoreArray}`)
+    exec.exec(`echo ${arrayOutput}`)
     if (ignoreArray.length > 0) {
       arrayOutput = arrayOutput.filter (val => {
         return !ignoreArray.find(ival => val.endsWith(ival))
