@@ -13324,10 +13324,7 @@ const main = async () => {
       };
 
       const file=`${inputs.target_folder}/.assets-ignore`;
-      await exec.exec(`
-        while read -r line; do
-          echo "$line"
-        done <${file}`
+      await exec.exec(`echo ${file}`
       , null, ignoreOptions);
     }
     
