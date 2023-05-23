@@ -69,7 +69,7 @@ const main = async () => {
     let arrayOutput = myOutput.split("\n");
     if (ignoreArray.length > 0) {
       arrayOutput = arrayOutput.filter (val => {
-        return !ignoreArray.filter(ival => val.endsWith(ival))
+        return !ignoreArray.find(ival => val.endsWith(ival))
       });
     }
     const count = arrayOutput.length -1;
