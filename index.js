@@ -56,7 +56,7 @@ const main = async () => {
         }
       };
 
-      const file=`${inputs.target_folder}.assets-ignore`;
+      const file=`${inputs.target_folder}/.assets-ignore`;
       await exec.exec(`
         while read -r line; do
           echo "$line"
