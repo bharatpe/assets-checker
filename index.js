@@ -25,6 +25,7 @@ const main = async () => {
     const { number: issueNumber } = pullRequest;
     const { full_name: repoFullName } = repository;
     const [owner, repo] = repoFullName.split("/");
+    const ignoreArray = [];
 
     const octokit = new Octokit({
       auth: inputs.token,
@@ -46,7 +47,6 @@ const main = async () => {
 
     async function getAssetsIgnoreFiles() {
       const ignoreOptions = {};
-      const ignoreArray = [];
       ignoreOptions.listeners = {
         stdout: (data) => {
           ignoreArray.push(data.toString());
