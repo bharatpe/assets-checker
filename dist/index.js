@@ -13269,6 +13269,7 @@ const core = __nccwpck_require__(6024);
 const github = __nccwpck_require__(5016);
 const exec = __nccwpck_require__(2423);
 const { Octokit } = __nccwpck_require__(7276);
+const fs = __nccwpck_require__(7147);
 
 
 const main = async () => {
@@ -13313,19 +13314,19 @@ const main = async () => {
     };
 
     async function getAssetsIgnoreFiles() {
-      const ignoreOptions = {};
-      ignoreOptions.listeners = {
-        stdout: (data) => {
-          ignoreArray.push(data.toString());
-        },
-        stderr: (data) => {
+      // const ignoreOptions = {};
+      // ignoreOptions.listeners = {
+      //   stdout: (data) => {
+      //     ignoreArray.push(data.toString());
+      //   },
+      //   stderr: (data) => {
           
-        }
-      };
+      //   }
+      // };
 
       const file=`${inputs.target_folder}/.assets-ignore`;
-      await exec.exec(`echo ${file}`
-      , null, ignoreOptions);
+      var ignoreArray = fs.readFileSync(file).toString().split("\n");
+      exec.exec(`echo ${ignoreArray}`)
     }
     
     await getAssetsIgnoreFiles();
