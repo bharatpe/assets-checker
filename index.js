@@ -64,7 +64,7 @@ const main = async () => {
       , null, ignoreOptions);
     }
     
-    await getAssetsIgnoreFiles();
+    // await getAssetsIgnoreFiles();
 
     await exec.exec(`find ${inputs.target_folder} -type f \( -name "*.jpeg" -o -name "*.png" -o -name "*.svg" -o -name "*.gif" -o -name "*.jpg" \) -size +${inputs.thrashold_size}k -exec ls -lh {} \;`, null, options);
 
