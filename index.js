@@ -2,6 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const exec = require("@actions/exec");
 const { Octokit } = require("@octokit/rest");
+const fs = require('fs');
 
 
 const main = async () => {
@@ -46,19 +47,19 @@ const main = async () => {
     };
 
     async function getAssetsIgnoreFiles() {
-      const ignoreOptions = {};
-      ignoreOptions.listeners = {
-        stdout: (data) => {
-          ignoreArray.push(data.toString());
-        },
-        stderr: (data) => {
+      // const ignoreOptions = {};
+      // ignoreOptions.listeners = {
+      //   stdout: (data) => {
+      //     ignoreArray.push(data.toString());
+      //   },
+      //   stderr: (data) => {
           
-        }
-      };
+      //   }
+      // };
 
       const file=`${inputs.target_folder}/.assets-ignore`;
-      await exec.exec(`echo ${file}`
-      , null, ignoreOptions);
+      var ignoreArray = fs.readFileSync(file).toString().split("\n");
+      exec.exec(`echo ${ignoreArray}`)
     }
     
     await getAssetsIgnoreFiles();
