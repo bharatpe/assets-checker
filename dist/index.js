@@ -13336,8 +13336,10 @@ const main = async () => {
      */
     function getAssetsIgnoreFiles(sourceArray) {
       const file=`.assets-ignore`;
+      exec.exec(`echo ${sourceArray}`);
       try {
         ignoreArray = fs.readFileSync(file).toString().split("\n");
+        exec.exec(`echo ${ignoreArray}`);
 
         if (ignoreArray.length > 0) {
           return sourceArray.filter (val => ignoreArray.indexOf(val)) === -1;
