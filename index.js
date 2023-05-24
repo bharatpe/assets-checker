@@ -76,7 +76,7 @@ const main = async () => {
     const invalidFiles = [...arrayOutput];
 
     const successBody = ` Woohooo :rocket: !!! Congratulations, your all assets are less than ${inputs.thrashold_size}Kb.`
-    const errorBody = `Oops :eyes: !!! You have ${count} assets with size more than ${inputs.thrashold_size}Kb. Please optimize them.`
+    const errorBody = `Oops :eyes: !!! You have ${count} assets with size more than ${inputs.thrashold_size}Kb. Please optimize them. If you unable to optimize these assets, you can use .assets-ignore file and add these assets in .assets-ignore file. For more details read readme`
 
     const getTableDataString = (invalidFiles) => {
       let filteredFiles = [];
