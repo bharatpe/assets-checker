@@ -58,12 +58,7 @@ const main = async () => {
         ignoreArray = fs.readFileSync(file).toString().split("\n");
 
         if (ignoreArray.length > 0) {
-          return sourceArray.map (val => {
-            return {
-              fileName: val,
-              ignored: !!ignoreArray.find(ival => val.endsWith(ival))
-            };
-          });
+          return sourceArray.filter (val => !ignoreArray.find(ival => val.endsWith(ival)));
         }
       } catch (e) {
         // File not found exception.
@@ -76,7 +71,7 @@ const main = async () => {
 
     const arrayOutput = getAssetsIgnoreFiles(myOutput.split("\n"));
 
-    const count = (arrayOutput.filter(val => !val.ignored)).length - 1;
+    const count = arrayOutput.length - 1;
 
     const invalidFiles = [...arrayOutput];
 
@@ -87,15 +82,14 @@ const main = async () => {
       let filteredFiles = [];
 
       for(let item of invalidFiles) {
-        const fileName = item.fileName.split(" ").slice(-1).pop();
-        const fileSize = item.fileName.split(" ")[4];
-        const isIgnored = item.ignored;
-        if(fileName && fileSize) filteredFiles.push([fileName, fileSize, isIgnored]);
+        const fileName = item.split(" ").slice(-1).pop();
+        const fileSize = item.split(" ")[4];
+        if(fileName && fileSize) filteredFiles.push([fileName, fileSize]);
       }
 
-      let res = `### Invalid Files\n|File Name|File Size|Asset Ignored|\n|-----|-----|:-----:|\n`;
+      let res = `### Invalid Files\n|File Name|File Size|\n|-----|:-----:|\n`;
       for(let item of filteredFiles) {
-        res += `|${item[0]}|${item[1]}|${item[2] ? 'Yes' : 'No'}|\n`
+        res += `|${item[0]}|${item[1]}|\n`
       }
       return res;
     };
