@@ -13400,7 +13400,7 @@ const main = async () => {
               res += `|${item}|${result}|\n`
             }
 
-            if (index === ignoreArray.length-1) {
+            if (index === ignoreArray.length) {
               resolve(res);
             }
           })
