@@ -25,9 +25,11 @@ npm run build
 ### .assets-ignore file
 Might be we have some images which size greater then the threshold we provided, in this case we can ignore these files by using .assets-ignore file.
 
-.assets-ignore file must present inside the root directory of your repo :
-<img width="400" alt="Screenshot 2022-08-24 at 4 49 39 PM" src="https://user-images.githubusercontent.com/61680562/240576818-7326f846-7d78-43e1-8b21-db96b9cb27a0.png">
-The ignore assets name must be add as full path and separate - separate lines:
+#### .assets-ignore file must present inside the root directory of your repo :
+
+<img width="300" alt="Screenshot 2022-08-24 at 4 49 39 PM" src="https://user-images.githubusercontent.com/61680562/240576818-7326f846-7d78-43e1-8b21-db96b9cb27a0.png">
+
+#### The ignore assets name must be add as full path and separate - separate lines:
 <img width="400" alt="Screenshot 2022-08-24 at 4 49 39 PM" src="https://user-images.githubusercontent.com/61680562/240576944-fdba0c9f-f349-4a1b-b9d5-adf569d73601.png">
 
 ## Usage:
