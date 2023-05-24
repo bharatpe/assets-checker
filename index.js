@@ -101,7 +101,7 @@ const main = async () => {
     };
 
     const getAllIgnoredFileString = (ignoreArray) => {
-      let res = `### Ignored Files\n|File Name\n|-----|\n`;
+      let res = `### All .assets-ignored Files\n|File Name\n|-----|\n`;
       for(const item of ignoreArray) {
         res += `|${item}|\n`
       }
@@ -123,6 +123,15 @@ const main = async () => {
         body: getTableDataString(invalidFiles),
       });
 
+      if (ignoreArray.length) {
+        octokit.rest.issues.createComment({
+          owner,
+          repo,
+          issue_number: issueNumber,
+          body: getAllIgnoredFileString(ignoreArray),
+        });
+      }
+
       core.setFailed('Invalid size assets exists !!!');
     }else {
       octokit.rest.issues.createComment({
@@ -131,12 +140,15 @@ const main = async () => {
         issue_number: issueNumber,
         body: successBody,
       });
-      octokit.rest.issues.createComment({
-        owner,
-        repo,
-        issue_number: issueNumber,
-        body: getAllIgnoredFileString(ignoreArray),
-      });
+
+      if (ignoreArray.length) {
+        octokit.rest.issues.createComment({
+          owner,
+          repo,
+          issue_number: issueNumber,
+          body: getAllIgnoredFileString(ignoreArray),
+        });
+      }
     }
 
   } catch (error) {
