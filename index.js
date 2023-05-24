@@ -75,11 +75,16 @@ const main = async () => {
         exec.exec(`echo ${ignoreArray}`);
 
         if (ignoreArray.length > 0) {
-          return sourceArray.filter (val => ignoreArray.indexOf(val)) === -1;
+          return sourceArray.filter (v => {
+            const fileName = v.split(" ").slice(-1).pop()
+            return ignoreArray.indexOf(fileName) === -1;
+          })
         }
       } catch (e) {
         // File not found exception.
       }
+
+      exec.exec(`echo ${sourceArray}`);
 
       return sourceArray;
     }
