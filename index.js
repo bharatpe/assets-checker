@@ -122,6 +122,8 @@ const main = async () => {
       return new Promise((resolve, reject) => {
         let res = `### All .assets-ignored Files\n|File Name|File Size\n|-----|:-----:|\n`;
         for(let index=0; index < ignoreArray.length; index++) {
+          const item = ignoreArray[index];
+
           if (!item) {
             if (index === ignoreArray.length-1) {
               resolve(res);
@@ -129,7 +131,6 @@ const main = async () => {
             return;
           }
 
-          const item = ignoreArray[index];
           fs.stat(item, (err, fileStats) => {
             if (err) {
               res += `|${item}|None|\n`
