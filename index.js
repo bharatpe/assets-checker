@@ -158,7 +158,6 @@ const main = async () => {
       }
     }
 
-    exec.exec(`echo ${count}`);
     if(count > 0) {
       octokit.rest.issues.createComment({
         owner,
