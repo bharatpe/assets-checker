@@ -69,10 +69,8 @@ const main = async () => {
      */
     function getAssetsIgnoreFiles(sourceArray) {
       const file=`.assets-ignore`;
-      exec.exec(`echo ${sourceArray}`);
       try {
         ignoreArray = fs.readFileSync(file).toString().split("\n");
-        exec.exec(`echo ${ignoreArray}`);
 
         if (ignoreArray.length > 0) {
           return sourceArray.filter (v => {
@@ -83,8 +81,6 @@ const main = async () => {
       } catch (e) {
         // File not found exception.
       }
-
-      exec.exec(`echo ${sourceArray}`);
 
       return sourceArray;
     }
@@ -158,7 +154,6 @@ const main = async () => {
     const publishIgnoreAssetsTable = async (ignoreArray) => {
       if (ignoreArray.length) {
         const body = await getAllIgnoredFileString(ignoreArray);
-        exec.exec(`echo ${body}`);
         octokit.rest.issues.createComment({
           owner,
           repo,
