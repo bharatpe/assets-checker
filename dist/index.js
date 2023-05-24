@@ -13391,13 +13391,6 @@ const main = async () => {
         for(let index=0; index < ignoreArray.length; index++) {
           const item = ignoreArray[index];
 
-          if (!item) {
-            if (index === ignoreArray.length-1) {
-              resolve(res);
-            }
-            return;
-          }
-
           fs.stat(item, (err, fileStats) => {
             if (err) {
               res += `|${item}|None|\n`
@@ -13431,6 +13424,7 @@ const main = async () => {
       }
     }
 
+    exec.exec(`echo ${count}`);
     if(count > 0) {
       octokit.rest.issues.createComment({
         owner,
