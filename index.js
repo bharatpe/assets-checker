@@ -4,6 +4,21 @@ const exec = require("@actions/exec");
 const { Octokit } = require("@octokit/rest");
 const fs = require('fs');
 
+const convertBytes = function(bytes) {
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
+
+  if (bytes == 0) {
+    return "n/a"
+  }
+
+  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)))
+
+  if (i == 0) {
+    return bytes + " " + sizes[i]
+  }
+
+  return (bytes / Math.pow(1024, i)).toFixed(1) + " " + sizes[i]
+}
 
 const main = async () => {
   try {
@@ -53,12 +68,12 @@ const main = async () => {
      * @returns Array of files.
      */
     function getAssetsIgnoreFiles(sourceArray) {
-      const file=`${inputs.target_folder}/.assets-ignore`;
+      const file=`.assets-ignore`;
       try {
         ignoreArray = fs.readFileSync(file).toString().split("\n");
 
         if (ignoreArray.length > 0) {
-          return sourceArray.filter (val => !ignoreArray.find(ival => val.endsWith(ival)));
+          return sourceArray.filter (val => ignoreArray.indexOf(val)) === -1;
         }
       } catch (e) {
         // File not found exception.
@@ -94,13 +109,47 @@ const main = async () => {
       return res;
     };
 
+    /**
+     * Get all Ignored file data as github comment string format.
+     * 
+     * @param {Array} ignoreArray array of files which is added in .assets-ignore file.
+     * @returns Promise of github comment string.
+     */
     const getAllIgnoredFileString = (ignoreArray) => {
-      let res = `### All .assets-ignored Files\n|File Name\n|-----|\n`;
-      for(const item of ignoreArray) {
-        res += `|${item}|\n`
-      }
-      return res;
+      return new Promise((resolve, reject) => {
+        let res = `### All .assets-ignored Files\n|File Name|File Size\n|-----|:-----:|\n`;
+        for(const index=0; index < ignoreArray.length; index++) {
+          fs.stat(item, (err, fileStats) => {
+            if (err) {
+              res += `|${item}|None|\n`
+            } else {
+              const result = convertBytes(fileStats.size)
+              res += `|${item}|${result}|\n`
+            }
+
+            if (index === ignoreArray.length-1) {
+              resolve(res);
+            }
+          })
+        }
+      })
     };
+
+    /**
+     * Publish .assets-ignore entries in github comment.
+     * 
+     * @param {Array} ignoreArray array of files which is added in .assets-ignore file.
+     */
+    const publishIgnoreAssetsTable = (ignoreArray) => {
+      if (ignoreArray.length) {
+        octokit.rest.issues.createComment({
+          owner,
+          repo,
+          issue_number: issueNumber,
+          body: getAllIgnoredFileString(ignoreArray),
+        });
+      }
+    }
 
     if(count > 0) {
       octokit.rest.issues.createComment({
@@ -117,14 +166,7 @@ const main = async () => {
         body: getTableDataString(invalidFiles),
       });
 
-      if (ignoreArray.length) {
-        octokit.rest.issues.createComment({
-          owner,
-          repo,
-          issue_number: issueNumber,
-          body: getAllIgnoredFileString(ignoreArray),
-        });
-      }
+      publishIgnoreAssetsTable(ignoreArray);
 
       core.setFailed('Invalid size assets exists !!!');
     }else {
@@ -135,14 +177,7 @@ const main = async () => {
         body: successBody,
       });
 
-      if (ignoreArray.length) {
-        octokit.rest.issues.createComment({
-          owner,
-          repo,
-          issue_number: issueNumber,
-          body: getAllIgnoredFileString(ignoreArray),
-        });
-      }
+      publishIgnoreAssetsTable(ignoreArray);
     }
 
   } catch (error) {
