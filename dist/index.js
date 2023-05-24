@@ -13342,8 +13342,7 @@ const main = async () => {
         if (ignoreArray.length > 0) {
           return sourceArray.filter (v => {
             const fileName = v.split(" ").slice(-1).pop()
-            exec.exec(`echo ${fileName}`);
-            exec.exec(`echo ${ignoreArray}`);
+            if (!fileName) return true;
             return ignoreArray.indexOf(fileName) === -1;
           })
         }
