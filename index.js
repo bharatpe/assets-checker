@@ -93,7 +93,7 @@ const main = async () => {
         if(fileName && fileSize) filteredFiles.push([fileName, fileSize, isIgnored]);
       }
 
-      let res = `### Invalid Files\n|File Name|File Size|Asset Ignored|\n|-----|:-----:|\n`;
+      let res = `### Invalid Files\n|File Name|File Size|Asset Ignored|\n|-----|-----|:-----:|\n`;
       for(let item of filteredFiles) {
         res += `|${item[0]}|${item[1]}|${item[2] ? 'Yes' : 'No'}|\n`
       }
