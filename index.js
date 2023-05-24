@@ -148,13 +148,15 @@ const main = async () => {
      * 
      * @param {Array} ignoreArray array of files which is added in .assets-ignore file.
      */
-    const publishIgnoreAssetsTable = (ignoreArray) => {
+    const publishIgnoreAssetsTable = async (ignoreArray) => {
       if (ignoreArray.length) {
+        const body = await getAllIgnoredFileString(ignoreArray);
+        exec.exec(`echo ${body}`);
         octokit.rest.issues.createComment({
           owner,
           repo,
           issue_number: issueNumber,
-          body: getAllIgnoredFileString(ignoreArray),
+          body,
         });
       }
     }
