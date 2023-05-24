@@ -31,7 +31,7 @@ const main = async () => {
       auth: inputs.token,
     });
 
-
+    let ignoreArray = [];
     let myOutput = '';
     let myError = '';
     const options = {};
@@ -55,11 +55,14 @@ const main = async () => {
     function getAssetsIgnoreFiles(sourceArray) {
       const file=`${inputs.target_folder}/.assets-ignore`;
       try {
-        const ignoreArray = fs.readFileSync(file).toString().split("\n");
+        ignoreArray = fs.readFileSync(file).toString().split("\n");
 
         if (ignoreArray.length > 0) {
-          return sourceArray.filter (val => {
-            return !ignoreArray.find(ival => val.endsWith(ival))
+          return sourceArray.map (val => {
+            return {
+              fileName: val,
+              ignored: !!ignoreArray.find(ival => val.endsWith(ival))
+            };
           });
         }
       } catch (e) {
@@ -73,7 +76,7 @@ const main = async () => {
 
     const arrayOutput = getAssetsIgnoreFiles(myOutput.split("\n"));
 
-    const count = arrayOutput.length -1;
+    const count = (arrayOutput.filter(val => !val.ignored)).length - 1;
 
     const invalidFiles = [...arrayOutput];
 
@@ -84,14 +87,23 @@ const main = async () => {
       let filteredFiles = [];
 
       for(let item of invalidFiles) {
-        const fileName = item.split(" ").slice(-1).pop();
-        const fileSize = item.split(" ")[4];
-        if(fileName && fileSize) filteredFiles.push([fileName, fileSize]);
+        const fileName = item.fileName.split(" ").slice(-1).pop();
+        const fileSize = item.fileName.split(" ")[4];
+        const isIgnored = item.ignored;
+        if(fileName && fileSize) filteredFiles.push([fileName, fileSize, isIgnored]);
       }
 
-      let res = `|File Name|File Size|\n|-----|:-----:|\n`;
+      let res = `### Invalid Files\n|File Name|File Size|Asset Ignored|\n|-----|:-----:|\n`;
       for(let item of filteredFiles) {
-        res += `|${item[0]}|${item[1]}|\n`
+        res += `|${item[0]}|${item[1]}|${item[2] ? 'Yes' : 'No'}|\n`
+      }
+      return res;
+    };
+
+    const getAllIgnoredFileString = (ignoreArray) => {
+      let res = `### Ignored Files\n|File Name\n|-----|\n`;
+      for(const item of ignoreArray) {
+        res += `|${item}|\n`
       }
       return res;
     };
@@ -118,6 +130,12 @@ const main = async () => {
         repo,
         issue_number: issueNumber,
         body: successBody,
+      });
+      octokit.rest.issues.createComment({
+        owner,
+        repo,
+        issue_number: issueNumber,
+        body: getAllIgnoredFileString(ignoreArray),
       });
     }
 
