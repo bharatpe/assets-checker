@@ -133,7 +133,7 @@ const main = async () => {
               res += `|${item}|${result}|\n`
             }
 
-            if (index === ignoreArray.length) {
+            if (index === ignoreArray.length-1) {
               resolve(res);
             }
           })
@@ -149,7 +149,7 @@ const main = async () => {
     const publishIgnoreAssetsTable = async (ignoreArray) => {
       if (ignoreArray.length) {
         const body = await getAllIgnoredFileString(ignoreArray);
-        octokit.rest.issues.createComment({
+        return octokit.rest.issues.createComment({
           owner,
           repo,
           issue_number: issueNumber,
@@ -174,7 +174,7 @@ const main = async () => {
         body: getTableDataString(invalidFiles),
       });
 
-      publishIgnoreAssetsTable(ignoreArray);
+      await publishIgnoreAssetsTable(ignoreArray);
 
       core.setFailed('Invalid size assets exists !!!');
     }else {
@@ -185,7 +185,7 @@ const main = async () => {
         body: successBody,
       });
 
-      publishIgnoreAssetsTable(ignoreArray);
+      await publishIgnoreAssetsTable(ignoreArray);
     }
 
   } catch (error) {
