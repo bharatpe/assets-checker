@@ -13399,7 +13399,9 @@ const main = async () => {
               const result = convertBytes(fileStats.size)
               res += `|${item}|${result}|\n`
             }
-
+              
+            exec.exec(`echo ${index}`);
+            exec.exec(`echo ${item}`);
             if (index === ignoreArray.length-1) {
               resolve(res);
             }
